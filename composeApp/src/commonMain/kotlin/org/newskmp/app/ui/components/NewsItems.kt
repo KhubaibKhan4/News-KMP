@@ -76,7 +76,7 @@ fun NewsArticleCard(article: Result) {
 
 
             Text(
-                text = "Published on ${formatDateTime(article.publishedDate)}",
+                text = "Published ${formatDateTime(article.publishedDate)}",
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
