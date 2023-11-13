@@ -23,7 +23,7 @@ data class Result(
     @SerialName("material_type_facet")
     val materialTypeFacet: String,
     @SerialName("multimedia")
-    val multimedia: List<Multimedia>,
+    val multimedia: List<Multimedia>?,
     @SerialName("org_facet")
     val orgFacet: List<String>,
     @SerialName("per_facet")
@@ -33,9 +33,9 @@ data class Result(
     @SerialName("section")
     val section: String,
     @SerialName("short_url")
-    val shortUrl: String,
+    val shortUrl: String?,
     @SerialName("subsection")
-    val subsection: String,
+    val subsection: String?,
     @SerialName("title")
     val title: String,
     @SerialName("updated_date")

@@ -1,29 +1,33 @@
 package org.newskmp.app
 
+import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
-import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,8 +45,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.newskmp.app.data.model.News
@@ -60,14 +63,14 @@ internal fun App() = AppTheme {
     val viewModel = MainViewModel(repository)
 
     val scope = rememberCoroutineScope()
-    val drawerState =
-        rememberDrawerState(initialValue = DrawerValue.Closed)
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     var newsData by remember { mutableStateOf<News?>(null) }
     var title by remember { mutableStateOf<String?>("News KMP") }
     var newsState by remember { mutableStateOf<NewsState>(NewsState.Loading) }
+    var isHomeNews by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(isHomeNews) {
         viewModel.getHome()
         viewModel.newsHome.collect() { state ->
             newsState = state
@@ -82,89 +85,35 @@ internal fun App() = AppTheme {
     4. need to add some features to Mobile Versions.
      */
 
+    // Define a list of categories
+    val categories =
+        listOf("Home", "US", "Technology", "Politics", "World", "Sports", "Business", "Science", "Arts", "AutoMobiles", "Books Review", "Fashion", "Food", "Health", "Insider", "Magazine", "Movies", "NY Region", "Obituaries", "Opinion", "Real Estate", "Sunday Review", "Theater", "T-Magazine", "Travel", "UpShot")
+
+    // Use a state to track the selected category
+    var selectedCategory by remember { mutableStateOf(categories.first()) }
+
+
     ModalNavigationDrawer(
         modifier = Modifier.fillMaxHeight(),
-        scrimColor = DrawerDefaults.scrimColor,
+        drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                Spacer(modifier = Modifier.height(8.dp))
-
-                //Home
+                Text("Drawer title", modifier = Modifier.padding(16.dp))
+                Divider()
                 NavigationDrawerItem(
-                    label = {
-                        Text("Home")
-                    },
-                    selected = true,
-                    onClick = {}
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-
-                //Arts
-                NavigationDrawerItem(
-                    label = {
-                        Text("Arts")
-                    },
+                    label = { Text(text = "Setting") },
                     selected = false,
-                    onClick = {}
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                //Science
-                NavigationDrawerItem(
-                    label = {
-                        Text("Science")
-                    },
-                    selected = false,
-                    onClick = {}
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-
-                //All
-                NavigationDrawerItem(
-                    label = {
-                        Text("All")
-                    },
-                    selected = false,
-                    onClick = {}
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                //business
-                NavigationDrawerItem(
-                    label = {
-                        Text("business")
-                    },
-                    selected = false,
-                    onClick = {}
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                //world
-                NavigationDrawerItem(
-                    label = {
-                        Text("world")
-                    },
-                    selected = false,
-                    onClick = {}
+                    onClick = { /*TODO*/ },
+                    icon = {
+                        Icon(imageVector = Icons.Default.Settings, contentDescription = null)
+                    }
                 )
 
-
-                Box(
-                    modifier = Modifier.fillMaxHeight(),
-                    contentAlignment = Alignment.BottomCenter
-                ) {
-                    Divider()
-                    Text(
-                        text = "Copyright (c) 2023 The New York Times Company",
-                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.align(alignment = Alignment.BottomCenter)
-                    )
-                }
             }
         },
         gesturesEnabled = true,
-        drawerState = drawerState
     ) {
+
         Column(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
 
             Row(
@@ -175,7 +124,13 @@ internal fun App() = AppTheme {
                 IconButton(
                     onClick = {
                         scope.launch {
-                            drawerState.open()
+                            drawerState.apply {
+                                if (drawerState.isClosed) {
+                                    drawerState.open()
+                                } else {
+                                    drawerState.close()
+                                }
+                            }
                         }
                     }
                 ) {
@@ -206,6 +161,170 @@ internal fun App() = AppTheme {
                 }
             }
 
+            // LazyRow for category buttons
+            LazyRow {
+                items(categories) { category ->
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        ElevatedButton(
+                            onClick = {
+                                scope.launch {
+                                    // Handle category-specific logic here, if needed
+                                    when (category) {
+                                        "Home" -> {
+                                            isHomeNews = !isHomeNews
+                                            selectedCategory =
+                                                category // Set selectedCategory explicitly for "Home" category
+                                        }
+
+                                        "US" -> {
+                                            viewModel.getUs()
+                                            viewModel.newsUs.collect() { newsState = it }
+                                        }
+
+                                        "Technology" -> {
+                                            viewModel.getTechnology()
+                                            viewModel.newsTechnology.collect() { newsState = it }
+                                        }
+
+                                        "Politics" -> {
+                                            viewModel.getPolitics()
+                                            viewModel.newsPolitics.collect() { newsState = it }
+                                        }
+
+                                        "World" -> {
+                                            viewModel.getWorld()
+                                            viewModel.newWorld.collect() { newsState = it }
+                                        }
+
+                                        "Sports" -> {
+                                            viewModel.getSports()
+                                            viewModel.newsSports.collect() { newsState = it }
+                                        }
+
+                                        "Business" -> {
+                                            viewModel.getBusiness()
+                                            viewModel.newsBusiness.collect() { newsState = it }
+                                        }
+
+                                        "Science" -> {
+                                            viewModel.getScience()
+                                            viewModel.newsScience.collect { newsState = it }
+                                        }
+
+                                        "Arts" -> {
+                                            viewModel.getArts()
+                                            viewModel.newsArts.collect { newsState = it }
+                                        }
+
+                                        "AutoMobiles" -> {
+                                            viewModel.getAutoMobiles()
+                                            viewModel.newsAutoMobiles.collect { newsState = it }
+                                        }
+
+                                        "Books Review" -> {
+                                            viewModel.getBookReviews()
+                                            viewModel.newsBookReviews.collect { newsState = it }
+                                        }
+
+                                        "Fashion" -> {
+                                            viewModel.getFashion()
+                                            viewModel.newsFashion.collect { newsState = it }
+                                        }
+
+                                        "Food" -> {
+                                            viewModel.getFood()
+                                            viewModel.newsFood.collect { newsState = it }
+                                        }
+
+                                        "Health" -> {
+                                            viewModel.getHealth()
+                                            viewModel.newsHealth.collect { newsState = it }
+                                        }
+
+                                        "Insider" -> {
+                                            viewModel.getInsider()
+                                            viewModel.newsInsider.collect { newsState = it }
+                                        }
+
+                                        "Magazine" -> {
+                                            viewModel.getMagazine()
+                                            viewModel.newsMagazine.collect { newsState = it }
+                                        }
+
+                                        "Movies" -> {
+                                            viewModel.getMovies()
+                                            viewModel.newsMovies.collect { newsState = it }
+                                        }
+
+                                        "NY Region" -> {
+                                            viewModel.getNYRegion()
+                                            viewModel.newsNYRegion.collect { newsState = it }
+                                        }
+
+                                        "Obituaries" -> {
+                                            viewModel.getObituaries()
+                                            viewModel.newsObituaries.collect { newsState = it }
+                                        }
+
+                                        "Opinion" -> {
+                                            viewModel.getOpinion()
+                                            viewModel.newsOpinion.collect { newsState = it }
+                                        }
+
+                                        "Real Estate" -> {
+                                            viewModel.getRealEstate()
+                                            viewModel.newsRealEstate.collect { newsState = it }
+                                        }
+
+                                        "Sunday Review" -> {
+                                            viewModel.getSundayReview()
+                                            viewModel.newsSundayReview.collect { newsState = it }
+                                        }
+
+                                        "Theater" -> {
+                                            viewModel.getTheater()
+                                            viewModel.newsTheater.collect { newsState = it }
+                                        }
+
+                                        "T-Magazine" -> {
+                                            viewModel.getTMagazine()
+                                            viewModel.newsTMagazine.collect { newsState = it }
+                                        }
+
+                                        "Travel" -> {
+                                            viewModel.getTravel()
+                                            viewModel.newsTravel.collect { newsState = it }
+                                        }
+
+                                        "UpShot" -> {
+                                            viewModel.getUpShot()
+                                            viewModel.newsUpShot.collect { newsState = it }
+                                        }
+                                    }
+
+                                }
+                            },
+                            // if (selectedCategory == category) MaterialTheme.colorScheme.primaryContainer else
+                            //if (selectedCategory == category) Color.Black else
+                            //if (selectedCategory == category) Color.Black else
+                            modifier = Modifier.padding(4.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.elevatedButtonColors(
+                                containerColor = MaterialTheme.colorScheme.outline, // Set the background color for selected and unselected states
+                                contentColor = Color.White, // Set the text color for selected and unselected states
+                            )
+                        ) {
+                            Text(
+                                text = category.uppercase(),
+                                color = Color.White
+                            )
+                        }
+                    }
+                }
+            }
+
+
+
             when (newsState) {
                 is NewsState.Loading -> {
                     title = "Loading, Please Wait..."
@@ -215,6 +334,7 @@ internal fun App() = AppTheme {
                 }
 
                 is NewsState.Success -> {
+
                     title = "News KMP"
                     val response = (newsState as NewsState.Success).news
                     newsData = response
@@ -229,10 +349,10 @@ internal fun App() = AppTheme {
                     Text(error)
                 }
             }
-
-
         }
     }
+
 }
+
 
 internal expect fun openUrl(url: String?)

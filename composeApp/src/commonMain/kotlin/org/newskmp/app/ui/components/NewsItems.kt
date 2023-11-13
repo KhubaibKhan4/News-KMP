@@ -53,7 +53,7 @@ fun NewsArticleCard(article: Result) {
                 .clickable { /* Handle click action */ }
                 .padding(16.dp)
         ) {
-            NewsImage(article.multimedia)
+            article.multimedia?.let { NewsImage(it) }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = article.title,

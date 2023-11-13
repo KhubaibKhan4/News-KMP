@@ -50,29 +50,25 @@ object NewsClientApi {
     }
 
     suspend fun getWorld(): News {
-        val url = "https://api.nytimes.com/svc/news/v3/content/nyt/world.json?api-key=${API}"
+        val url = "https://api.nytimes.com/svc/topstories/v2/world.json?api-key=${API}"
         return client.get(url).body()
     }
 
-    suspend fun getAll(): News {
-        val url = "https://api.nytimes.com/svc/news/v3/content/nyt/all.json?api-key=${API}"
+    suspend fun getSports(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/sports.json?api-key=${API}"
         return client.get(url).body()
     }
 
     suspend fun getBusiness(): News {
-        val url = "https://api.nytimes.com/svc/news/v3/content/nyt/business.json?api-key=${API}"
+        val url = "https://api.nytimes.com/svc/topstories/v2/business.json?api-key=${API}"
         return client.get(url).body()
     }
 
     suspend fun getTechnology(): News {
-        val url = "https://api.nytimes.com/svc/news/v3/content/nyt/technology.json?api-key=${API}"
+        val url = "https://api.nytimes.com/svc/topstories/v2/technology.json?api-key=${API}"
         return client.get(url).body()
     }
 
-    suspend fun getSport(): News {
-        val url = "https://api.nytimes.com/svc/news/v3/content/nyt/sport.json?api-key=${API}"
-        return client.get(url).body()
-    }
 
     suspend fun getPolitics(): News {
         val url = "https://api.nytimes.com/svc/topstories/v2/politics.json?api-key=${API}"
@@ -84,7 +80,93 @@ object NewsClientApi {
         return client.get(url).body()
     }
 
+    suspend fun getUs(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/us.json?api-key=${API}"
+        return client.get(url).body()
+    }
 
+    suspend fun getArts(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/arts.json?api-key=${API}"
+        return client.get(url).body()
+    }
 
+    suspend fun getAutoMobiles(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/automobiles.json?api-key=${API}"
+        return client.get(url).body()
+    }
+    suspend fun getBooksReview(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/books/review.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getFashion(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/fashion.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getFood(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/food.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getHealth(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/health.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getInsider(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/insider.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getMagazine(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/magazine.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getMovies(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/movies.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getNYRegion(): News {
+        val url = "https://api.nytimes.com/svc/topstories/v2/nyregion.json?api-key=${API}"
+        return client.get(url).body()
+    }
+    suspend fun getObituaries():News{
+        val url = "https://api.nytimes.com/svc/topstories/v2/obituaries.json?api-key=${API}"
+        return client.get(url).body()
+    }
+    suspend fun getOpinion():News{
+        val url = "https://api.nytimes.com/svc/topstories/v2/opinion.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getRealEstate():News{
+        val url = "https://api.nytimes.com/svc/topstories/v2/realestate.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getSundayReview():News{
+        val url = "https://api.nytimes.com/svc/topstories/v2/sundayreview.json?api-key=${API}"
+        return client.get(url).body()
+    }
+
+    suspend fun getTravel():News{
+        val url = "https://api.nytimes.com/svc/topstories/v2/travel.json?api-key=${API}"
+        return client.get(url).body()
+    }
+    suspend fun getTheater():News{
+        val url = "https://api.nytimes.com/svc/topstories/v2/theater.json?api-key=${API}"
+        return client.get(url).body()
+    }
+    suspend fun getTMagazine():News{
+        val url = "https://api.nytimes.com/svc/topstories/v2/t-magazine.json?api-key=${API}"
+        return client.get(url).body()
+    }
+    suspend fun getUpShot():News{
+        val url = "https://api.nytimes.com/svc/topstories/v2/upshot.json?api-key=${API}"
+        return client.get(url).body()
+    }
 
 }
