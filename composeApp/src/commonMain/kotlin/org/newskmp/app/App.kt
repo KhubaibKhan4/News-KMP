@@ -68,11 +68,19 @@ internal fun App() = AppTheme {
     var newsState by remember { mutableStateOf<NewsState>(NewsState.Loading) }
 
     LaunchedEffect(Unit) {
-        viewModel.getNewsAll()
-        viewModel.newsAll.collect() { state ->
+        viewModel.getHome()
+        viewModel.newsHome.collect() { state ->
             newsState = state
         }
     }
+
+    /*
+
+    1. Navigation Rails needs to be integrated on Desktop Version.
+    2. Scrollbar need to be added to Web & Desktop Versions.
+    3. need to add native UI to Desktop and Web Versions
+    4. need to add some features to Mobile Versions.
+     */
 
     ModalNavigationDrawer(
         modifier = Modifier.fillMaxHeight(),
@@ -138,17 +146,20 @@ internal fun App() = AppTheme {
                 )
 
 
-               Box(modifier = Modifier.fillMaxHeight(),
-                   contentAlignment = Alignment.BottomCenter) {
-                   Divider()
-                   Text(text = "Copyright (c) 2023 The New York Times Company",
-                       fontSize = MaterialTheme.typography.bodySmall.fontSize,
-                       maxLines = 1,
-                       overflow = TextOverflow.Ellipsis,
-                       fontWeight = FontWeight.SemiBold,
-                       modifier = Modifier.align(alignment = Alignment.BottomCenter)
-                   )
-               }
+                Box(
+                    modifier = Modifier.fillMaxHeight(),
+                    contentAlignment = Alignment.BottomCenter
+                ) {
+                    Divider()
+                    Text(
+                        text = "Copyright (c) 2023 The New York Times Company",
+                        fontSize = MaterialTheme.typography.bodySmall.fontSize,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.align(alignment = Alignment.BottomCenter)
+                    )
+                }
             }
         },
         gesturesEnabled = true,
