@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.newskmp.app.repository.Repository
 import org.newskmp.app.util.NewsState
+import org.newskmp.app.util.SearchState
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
 
@@ -112,6 +113,10 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     //TMagazine
     private val _newsUpShot = MutableStateFlow<NewsState>(NewsState.Loading)
     val newsUpShot: StateFlow<NewsState> = _newsUpShot
+
+    //Search News
+    private val _newsSearch = MutableStateFlow<SearchState>(SearchState.Loading)
+    val newsSearch: StateFlow<SearchState> = _newsSearch
 
     fun getHome() {
         viewModelScope.launch {
@@ -420,6 +425,18 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
                 _newsUpShot.value = NewsState.Success(response)
             } catch (e: Exception) {
                 _newsUpShot.value = NewsState.Error(e.message.toString())
+            }
+        }
+    }
+
+    fun getSearchNews(query: String) {
+        viewModelScope.launch {
+            _newsSearch.value = SearchState.Loading
+            try {
+                val response = repository.getSearch(query)
+                _newsSearch.value = SearchState.Success(response)
+            } catch (e: Exception) {
+                _newsSearch.value = SearchState.Error(e.message.toString())
             }
         }
     }

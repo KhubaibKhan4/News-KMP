@@ -13,6 +13,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.newskmp.app.data.model.News
+import org.newskmp.app.data.model.search.SearchNews
 import org.newskmp.app.util.Constant.API
 import org.newskmp.app.util.Constant.TIMEOUT
 
@@ -166,6 +167,10 @@ object NewsClientApi {
     }
     suspend fun getUpShot():News{
         val url = "https://api.nytimes.com/svc/topstories/v2/upshot.json?api-key=${API}"
+        return client.get(url).body()
+    }
+    suspend fun getSearch(query: String):SearchNews{
+        val url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${API}"
         return client.get(url).body()
     }
 

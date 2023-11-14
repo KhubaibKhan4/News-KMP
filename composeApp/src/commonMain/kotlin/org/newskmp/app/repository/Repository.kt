@@ -1,6 +1,7 @@
 package org.newskmp.app.repository
 
 import org.newskmp.app.data.model.News
+import org.newskmp.app.data.model.search.SearchNews
 import org.newskmp.app.data.remote.NewsClientApi
 
 class Repository {
@@ -88,6 +89,9 @@ class Repository {
     }
     suspend fun getUpShot():News{
         return NewsClientApi.getUpShot()
+    }
+    suspend fun getSearch(query: String):SearchNews{
+        return NewsClientApi.getSearch(query)
     }
 
 }

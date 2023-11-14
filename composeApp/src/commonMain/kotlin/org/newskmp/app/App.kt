@@ -1,6 +1,6 @@
 package org.newskmp.app
 
-import androidx.compose.foundation.gestures.DraggableState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +22,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -35,6 +37,8 @@ import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,15 +49,22 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.newskmp.app.data.model.News
+import org.newskmp.app.data.model.search.SearchNews
 import org.newskmp.app.repository.Repository
 import org.newskmp.app.theme.AppTheme
 import org.newskmp.app.theme.LocalThemeIsDark
 import org.newskmp.app.ui.components.NewsList
+import org.newskmp.app.ui.components.SearchList
+import org.newskmp.app.ui.components.TopNews
 import org.newskmp.app.util.NewsState
+import org.newskmp.app.util.SearchState
 import org.newskmp.app.viewmodel.MainViewModel
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -66,14 +77,26 @@ internal fun App() = AppTheme {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     var newsData by remember { mutableStateOf<News?>(null) }
+    var searchData by remember { mutableStateOf<SearchNews?>(null) }
     var title by remember { mutableStateOf<String?>("News KMP") }
     var newsState by remember { mutableStateOf<NewsState>(NewsState.Loading) }
+    var searchSate by remember { mutableStateOf<SearchState>(SearchState.Loading) }
     var isHomeNews by remember { mutableStateOf(false) }
+    var isSearch by remember { mutableStateOf(false) }
+    var text by remember { mutableStateOf("") }
 
     LaunchedEffect(isHomeNews) {
         viewModel.getHome()
         viewModel.newsHome.collect() { state ->
             newsState = state
+        }
+    }
+    if (isSearch) {
+        scope.launch {
+            viewModel.getSearchNews(text)
+            viewModel.newsSearch.collect() { state ->
+                searchSate = state
+            }
         }
     }
 
@@ -87,7 +110,34 @@ internal fun App() = AppTheme {
 
     // Define a list of categories
     val categories =
-        listOf("Home", "US", "Technology", "Politics", "World", "Sports", "Business", "Science", "Arts", "AutoMobiles", "Books Review", "Fashion", "Food", "Health", "Insider", "Magazine", "Movies", "NY Region", "Obituaries", "Opinion", "Real Estate", "Sunday Review", "Theater", "T-Magazine", "Travel", "UpShot")
+        listOf(
+            "Home",
+            "US",
+            "Technology",
+            "Politics",
+            "World",
+            "Sports",
+            "Business",
+            "Science",
+            "Arts",
+            "AutoMobiles",
+            "Books Review",
+            "Fashion",
+            "Food",
+            "Health",
+            "Insider",
+            "Magazine",
+            "Movies",
+            "NY Region",
+            "Obituaries",
+            "Opinion",
+            "Real Estate",
+            "Sunday Review",
+            "Theater",
+            "T-Magazine",
+            "Travel",
+            "UpShot"
+        )
 
     // Use a state to track the selected category
     var selectedCategory by remember { mutableStateOf(categories.first()) }
@@ -135,7 +185,8 @@ internal fun App() = AppTheme {
                     }
                 ) {
                     Icon(
-                        modifier = Modifier.padding(8.dp).size(20.dp),
+                        modifier = Modifier.pointerHoverIcon(icon = PointerIcon.Hand).padding(8.dp)
+                            .size(20.dp),
                         imageVector = Icons.Default.Menu,
                         contentDescription = null
                     )
@@ -154,17 +205,47 @@ internal fun App() = AppTheme {
                     onClick = { isDark = !isDark },
                 ) {
                     Icon(
-                        modifier = Modifier.padding(8.dp).size(20.dp),
+                        modifier = Modifier.size(20.dp),
                         imageVector = if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode,
                         contentDescription = null
                     )
                 }
             }
 
+            TextField(
+                value = text,
+                onValueChange = { text = it },
+                placeholder = {
+                    Text("Search News...")
+                },
+                trailingIcon = {
+                    IconButton(onClick = {
+                        isSearch = !isSearch
+                    }) {
+                        Image(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null
+                        )
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(0.70f)
+                    .clip(shape = RoundedCornerShape(24.dp))
+                    .align(alignment = Alignment.CenterHorizontally),
+                maxLines = 1,
+                colors = TextFieldDefaults.colors(
+                    disabledTextColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                )
+            )
+
             // LazyRow for category buttons
             LazyRow {
                 items(categories) { category ->
-                    Box(modifier = Modifier.fillMaxWidth()) {
+                    Box(
+                        modifier = Modifier.fillMaxWidth().pointerHoverIcon(icon = PointerIcon.Hand)
+                    ) {
                         ElevatedButton(
                             onClick = {
                                 scope.launch {
@@ -324,29 +405,78 @@ internal fun App() = AppTheme {
             }
 
 
+            if (isSearch) {
+                when (searchSate) {
+                    is SearchState.Loading -> {
+                        title = "Loading, Please Wait..."
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
+                    }
 
-            when (newsState) {
-                is NewsState.Loading -> {
-                    title = "Loading, Please Wait..."
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
+                    is SearchState.Success -> {
+
+                        title = "News KMP"
+                        val response = (searchSate as SearchState.Success).searchNews
+                        searchData = response
+                        //TopNews(newsData!!)
+                        SearchList(searchData!!)
+                        FlowRow {
+                            Text("$searchData")
+                        }
+                    }
+
+                    is SearchState.Error -> {
+                        val error = (searchSate as SearchState.Error).error
+                        Row {
+                            Text(error)
+                            IconButton(onClick = {
+                                isHomeNews = !isHomeNews
+                            }) {
+                                Icon(imageVector = Icons.Default.Refresh, contentDescription = "")
+                            }
+                        }
                     }
                 }
-
-                is NewsState.Success -> {
-
-                    title = "News KMP"
-                    val response = (newsState as NewsState.Success).news
-                    newsData = response
-                    NewsList(newsData!!)
-                    FlowRow {
-                        Text("$newsData")
+            } else {
+                when (newsState) {
+                    is NewsState.Loading -> {
+                        title = "Loading, Please Wait..."
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
-                }
 
-                is NewsState.Error -> {
-                    val error = (newsState as NewsState.Error).error
-                    Text(error)
+                    is NewsState.Success -> {
+
+                        title = "News KMP"
+                        val response = (newsState as NewsState.Success).news
+                        newsData = response
+                        TopNews(newsData!!)
+                        NewsList(newsData!!)
+                        FlowRow {
+                            Text("$newsData")
+                        }
+
+                    }
+
+                    is NewsState.Error -> {
+                        val error = (newsState as NewsState.Error).error
+                        Row {
+                            Text(error)
+                            IconButton(onClick = {
+                                isHomeNews = !isHomeNews
+                            }) {
+                                Icon(imageVector = Icons.Default.Refresh, contentDescription = "")
+                            }
+                        }
+                    }
                 }
             }
         }
