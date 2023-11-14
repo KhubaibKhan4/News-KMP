@@ -1,5 +1,84 @@
-# Compose Multiplatform Application
+# News Kotlin Multiplatform Project
 
+This is a Kotlin Multiplatform Project for a news application that supports Android, iOS, Web, and Desktop platforms.
+
+## Technologies Used
+
+- **Kotlin Multiplatform:** The project is built using Kotlin Multiplatform, allowing code sharing across different platforms.
+
+- **Android:** The Android app is built using Kotlin and leverages the Android SDK.
+
+- **iOS:** The iOS app is built using Kotlin Multiplatform, enabling code reuse with the iOS platform.
+
+- **Web & Desktop:** The project includes support for both Web and Desktop platforms, providing a versatile user experience.
+
+## Libraries Used
+
+- **Koin:** Dependency injection framework for managing dependencies in a Kotlin Multiplatform project.
+
+- **ComposeImageLoader:** Image loading library for Jetpack Compose, used for loading and displaying images efficiently.
+
+- **Ktor Client:** A multiplatform HTTP client for making network requests in a Kotlin Multiplatform project.
+
+- **Ski:** A lightweight and fast image loading library for Kotlin Multiplatform projects.
+
+- **Moko MVVM:** A multiplatform MVVM library that helps in implementing the Model-View-ViewModel architecture.
+
+<!-- Add more libraries as needed -->
+
+## Screenshots
+
+### Screenshot 1
+![Screenshot 1](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png" width="400" height="800"> -->
+
+### Screenshot 2
+![Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png" width="400" height="800"> -->
+
+### Screenshot 3
+![Screenshot 3](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png" width="400" height="800"> -->
+
+### Screenshot 4
+![Screenshot 4](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png" width="400" height="800"> -->
+
+### Screenshot 5
+![Screenshot 5](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png" width="400" height="800"> -->
+
+### Screenshot 6
+![Screenshot 6](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png" width="400" height="800"> -->
+
+### Screenshot 7
+![Screenshot 7](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/7.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/7.png" width="400" height="800"> -->
+
+### Screenshot 8
+![Screenshot 8](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/8.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/8.png" width="400" height="800"> -->
+
+### Screenshot 9
+![Screenshot 9](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/9.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/9.png" width="400" height="800"> -->
+
+### Screenshot 10
+![Screenshot 10](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/10.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/10.png" width="400" height="800"> -->
+
+<!-- Repeat the above pattern for each screenshot, up to Screenshot 10 -->
+
+
+
+## How to Build
+
+To build the project, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/KhubaibKhan4/News-KMP.git`
+2. Open the project in your preferred IDE.
+3. Build and run the project on your desired platform.
 ## Before running!
  - check your system with [KDoctor](https://github.com/Kotlin/kdoctor)
  - install JDK 17 on your machine
