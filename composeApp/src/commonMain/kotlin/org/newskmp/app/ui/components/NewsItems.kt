@@ -22,12 +22,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.newskmp.app.data.model.Multimedia
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.Result
+import org.newskmp.app.ui.screen.DetailScreen
 import kotlin.time.Duration
 
 @Composable
@@ -41,6 +43,7 @@ fun NewsList(news: News) {
 
 @Composable
 fun NewsArticleCard(article: Result) {
+    val navigator = LocalNavigator.current
     Card(
         modifier = Modifier
             .padding(16.dp)
@@ -50,7 +53,9 @@ fun NewsArticleCard(article: Result) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { /* Handle click action */ }
+                .clickable {
+                    navigator!!.push(DetailScreen(article))
+                }
                 .padding(16.dp)
         ) {
             article.multimedia?.let { NewsImage(it) }

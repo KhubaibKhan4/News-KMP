@@ -35,10 +35,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
 import org.newskmp.app.data.model.Multimedia
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.Result
+import org.newskmp.app.ui.screen.DetailScreen
 
 @Composable
 fun TopNews(news: News) {
@@ -61,13 +63,13 @@ fun TopNews(news: News) {
 
 @Composable
 fun TopNewsCard(result: Result) {
-
+val navigator = LocalNavigator.current
     Card(
         modifier = Modifier
             .width(345.dp)
             .height(240.dp)
             .clickable {
-
+                       navigator!!.push(DetailScreen(result))
             },
         colors = CardDefaults.cardColors()
     ) {
