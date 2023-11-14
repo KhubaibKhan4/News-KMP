@@ -30,27 +30,27 @@ This is a Kotlin Multiplatform Project for a news application that supports Andr
 
 ### Screenshot 1
 ![Screenshot 1](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png" width="400" height="800"> -->
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png" width="200" height="400"> -->
 
 ### Screenshot 2
 ![Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png" width="400" height="800"> -->
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png" width="200" height="400"> -->
 
 ### Screenshot 3
 ![Screenshot 3](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png" width="400" height="800"> -->
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png" width="200" height="400"> -->
 
 ### Screenshot 4
 ![Screenshot 4](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png" width="400" height="800"> -->
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png" width="200" height="400"> -->
 
 ### Screenshot 5
 ![Screenshot 5](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png" width="400" height="800"> -->
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png" width="200" height="400"> -->
 
 ### Screenshot 6
 ![Screenshot 6](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png" width="400" height="800"> -->
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png" width="200" height="400"> -->
 
 ### Screenshot 7
 ![Screenshot 7](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/7.png)
