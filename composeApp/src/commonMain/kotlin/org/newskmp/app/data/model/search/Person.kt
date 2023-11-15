@@ -7,19 +7,19 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Person(
     @SerialName("firstname")
-    val firstname: String,
+    val firstname: String? = null,
     @SerialName("lastname")
-    val lastname: String?,
+    val lastname: String? = null,
     @SerialName("middlename")
-    val middlename: String?,
+    val middlename: String? = null,
     @SerialName("organization")
-    val organization: String,
+    val organization: String? = null,
     @SerialName("qualifier")
-    val qualifier: String?,
+    val qualifier: String? = null,
     @SerialName("rank")
-    val rank: Int,
+    val rank: Int? = null,
     @SerialName("role")
-    val role: String,
+    val role: String? = null,
     @SerialName("title")
-    val title: String?
+    val title: String? = null
 )

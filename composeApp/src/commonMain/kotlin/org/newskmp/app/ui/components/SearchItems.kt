@@ -22,24 +22,29 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.navigator.LocalNavigator
 import com.seiko.imageloader.rememberImagePainter
-import org.newskmp.app.data.model.Multimedia
-import org.newskmp.app.data.model.News
-import org.newskmp.app.data.model.Result
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import org.newskmp.app.data.model.search.Doc
 import org.newskmp.app.data.model.search.SearchNews
+import org.newskmp.app.ui.screen.detail.DetailScreen
 
 @Composable
 fun SearchList(searchNews: SearchNews) {
     LazyVerticalGrid(columns = GridCells.Adaptive(300.dp)) {
-        items(searchNews.response.docs) { doc ->
-            SearchArticleCard(doc)
+        searchNews.response.docs.let {
+            items(it) { doc ->
+                SearchArticleCard(doc!!)
+            }
         }
+
     }
 }
 
 @Composable
 fun SearchArticleCard(doc: Doc) {
+    val navigator = LocalNavigator.current
     Card(
         modifier = Modifier
             .padding(16.dp)
@@ -49,53 +54,58 @@ fun SearchArticleCard(doc: Doc) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { /* Handle click action */ }
+                .clickable {
+
+                }
                 .padding(16.dp)
         ) {
-            SearchImage("https://static01.nyt.com/"+doc.multimedia[0].url)
+            SearchImage((doc?.multimedia?.get(0)?.url))
             Spacer(modifier = Modifier.height(16.dp))
+            doc.abstract?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            doc.leadParagraph?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
             Text(
-                text = doc.abstract,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp),
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = doc.leadParagraph,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(bottom = 8.dp),
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = "${doc.byline.original}",
+                text = "${doc.byline?.original ?: "by KMP News"}",
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
 
 
-            Text(
-                text = "Published ${formatDateTime(doc.pubDate)}",
-                style = MaterialTheme.typography.labelMedium,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
+//            Text(
+//                text = "Published ${doc.pubDate?.let { formatDateTime(it) }}",
+//                style = MaterialTheme.typography.labelMedium,
+//                modifier = Modifier.padding(bottom = 4.dp)
+//            )
         }
     }
 }
 
 @Composable
-fun SearchImage(multimedia: String) {
-
-    Image(
-        painter = rememberImagePainter(multimedia),
-        contentDescription = multimedia,
+fun SearchImage(multimedia: String?) {
+    val painterResource = asyncPainterResource(data = "https://static01.nyt.com/$multimedia")
+    KamelImage(
+        resource = painterResource,
+        contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = Modifier
             .height(200.dp)
             .fillMaxWidth()
             .clip(shape = RoundedCornerShape(8.dp))
     )
-
 }

@@ -3,6 +3,7 @@ package org.newskmp.app.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.newskmp.app.data.model.news.Multimedia
 
 @Serializable
 data class Result(

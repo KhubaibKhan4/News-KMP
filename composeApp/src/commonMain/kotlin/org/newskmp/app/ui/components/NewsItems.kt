@@ -30,7 +30,7 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import org.newskmp.app.data.model.Multimedia
+import org.newskmp.app.data.model.news.Multimedia
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.Result
 import org.newskmp.app.isAndroid

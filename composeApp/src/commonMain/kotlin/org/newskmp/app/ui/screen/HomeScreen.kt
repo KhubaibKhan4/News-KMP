@@ -19,12 +19,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
@@ -55,6 +55,7 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.search.SearchNews
@@ -85,6 +86,7 @@ class HomeScreen() : Screen {
         var searchSate by remember { mutableStateOf<SearchState>(SearchState.Loading) }
         var isHomeNews by remember { mutableStateOf(false) }
         var isSearch by remember { mutableStateOf(false) }
+        var isSearchEnabled by remember { mutableStateOf(false) }
         var text by remember { mutableStateOf("") }
 
         LaunchedEffect(isHomeNews) {
@@ -150,14 +152,22 @@ class HomeScreen() : Screen {
             drawerState = drawerState,
             drawerContent = {
                 ModalDrawerSheet {
-                    Text("Drawer title", modifier = Modifier.padding(16.dp))
+                    Text("News KMP", modifier = Modifier.padding(16.dp))
                     Divider()
                     NavigationDrawerItem(
-                        label = { Text(text = "Setting") },
+                        label = { Text(text = "Search") },
                         selected = false,
-                        onClick = { /*TODO*/ },
+                        onClick = {
+                            isSearchEnabled = !isSearchEnabled
+                            scope.launch(Dispatchers.Default) {
+                                if (drawerState.isOpen) drawerState.close() else drawerState.open()
+                            }
+                        },
                         icon = {
-                            Icon(imageVector = Icons.Default.Settings, contentDescription = null)
+                            Icon(
+                                imageVector = if (isSearchEnabled) Icons.Default.Close else Icons.Default.Search,
+                                contentDescription = null
+                            )
                         }
                     )
 
@@ -218,35 +228,43 @@ class HomeScreen() : Screen {
                 }
 
                 if (isAndroid()) {
-                    TextField(
-                        value = text,
-                        onValueChange = { text = it },
-                        placeholder = {
-                            Text("Search News...")
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                isSearch = !isSearch
-                            }) {
-                                Image(
-                                    imageVector = Icons.Default.Search,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth(0.70f)
-                            .clip(shape = RoundedCornerShape(24.dp))
-                            .align(alignment = Alignment.CenterHorizontally),
-                        maxLines = 1,
-                        colors = TextFieldDefaults.colors(
-                            disabledTextColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent
+                    if (isSearchEnabled) {
+                        TextField(
+                            value = text,
+                            onValueChange = { text = it },
+                            placeholder = {
+                                Text("Search News...")
+                            },
+                            trailingIcon = {
+                                IconButton(onClick = {
+//                                    scope.launch {
+//                                        viewModel.getSearchNews(text)
+//                                        viewModel.newsSearch.collect() { state ->
+//                                            searchSate = state
+//                                        }
+//                                    }
+                                    isSearch = !isSearch
+                                }) {
+                                    Image(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(0.70f)
+                                .clip(shape = RoundedCornerShape(24.dp))
+                                .align(alignment = Alignment.CenterHorizontally),
+                            maxLines = 1,
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color.Transparent,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor = Color.Transparent
+                            )
                         )
-                    )
+                    }
                 } else {
-                    if (isSearch){
+                    if (isSearch) {
                         TextField(
                             value = text,
                             onValueChange = { text = it },

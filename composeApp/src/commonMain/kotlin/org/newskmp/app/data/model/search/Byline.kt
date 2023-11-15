@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Byline(
     @SerialName("organization")
-    val organization: String?,
+    val organization: String? = null,
     @SerialName("original")
-    val original: String?,
+    val original: String? = null,
     @SerialName("person")
-    val person: List<Person>
+    val person: List<Person>? = null
 )

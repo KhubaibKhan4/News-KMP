@@ -7,11 +7,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Keyword(
     @SerialName("major")
-    val major: String,
+    val major: String? = null,
     @SerialName("name")
-    val name: String,
+    val name: String? = null,
     @SerialName("rank")
-    val rank: Int,
+    val rank: Int? = null,
     @SerialName("value")
-    val value: String
+    val value: String? = null
 )

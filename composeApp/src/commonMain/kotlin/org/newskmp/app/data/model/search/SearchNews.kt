@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SearchNews(
     @SerialName("copyright")
-    val copyright: String,
+    val copyright: String? = null,
     @SerialName("response")
     val response: Response,
     @SerialName("status")
-    val status: String
+    val status: String? = null
 )

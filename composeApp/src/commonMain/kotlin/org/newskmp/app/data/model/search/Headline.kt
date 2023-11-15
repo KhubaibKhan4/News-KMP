@@ -7,17 +7,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Headline(
     @SerialName("content_kicker")
-    val contentKicker: String?,
+    val contentKicker: String? = null,
     @SerialName("kicker")
-    val kicker: String?,
+    val kicker: String? = null,
     @SerialName("main")
-    val main: String,
+    val main: String? = null,
     @SerialName("name")
-    val name: String?,
+    val name: String? = null,
     @SerialName("print_headline")
-    val printHeadline: String?,
+    val printHeadline: String? = null,
     @SerialName("seo")
-    val seo: String?,
+    val seo: String? = null,
     @SerialName("sub")
-    val sub: String?
+    val sub: String? = null
 )

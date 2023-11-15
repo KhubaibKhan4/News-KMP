@@ -1,6 +1,7 @@
 package org.newskmp.app.ui.screen.detail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,7 +24,9 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.LocalOffer
+import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Subject
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -38,6 +41,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -130,6 +134,8 @@ class DetailScreenLarge(
 @Composable
 fun DetailContent(result: Result) {
     val navigator = LocalNavigator.current
+    val uriHandler = LocalUriHandler.current
+
 
     Row(
         modifier = Modifier
@@ -233,6 +239,28 @@ fun DetailContent(result: Result) {
                 )
             }
 
+            // Sub- Section
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Subject,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Sub-Section: ${result.subsection}",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        lineHeight = 21.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Justify
+                    )
+                )
+            }
+
             // Category
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -321,8 +349,7 @@ fun DetailContent(result: Result) {
                 )
             }
 
-
-            // perFacet
+            // CopyRight
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
@@ -334,7 +361,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Short Url: ${result.shortUrl}",
+                    text = "CopyRight : ${result.multimedia?.get(0)?.copyright}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -379,9 +406,37 @@ fun DetailContent(result: Result) {
                     }
                 }
             }
+
+            // URL
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth().clickable {
+                    uriHandler.openUri(result.url)
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.OpenInNew,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Official URL : ${result.url}",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        lineHeight = 21.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Justify
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+
         }
     }
 }
+
 
 
 

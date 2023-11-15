@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Meta(
     @SerialName("hits")
-    val hits: Int,
+    val hits: Int? = null,
     @SerialName("offset")
-    val offset: Int,
+    val offset: Int? = null,
     @SerialName("time")
-    val time: Int
+    val time: Int? = null
 )

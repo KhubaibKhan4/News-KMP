@@ -47,17 +47,16 @@ import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.newskmp.app.data.model.Multimedia
+import org.newskmp.app.data.model.news.Multimedia
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.Result
-import org.newskmp.app.isAndroid
-import org.newskmp.app.ui.screen.detail.DetailScreen
 import org.newskmp.app.ui.screen.detail.DetailScreenLarge
 
 @Composable
 fun TopNews(news: News) {
+    val state = rememberLazyGridState()
     LazyVerticalGrid(
-        columns = GridCells.Adaptive(300.dp),
+        columns = GridCells.Adaptive(170.dp),
         state = rememberLazyGridState(),
         userScrollEnabled = true, contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),

@@ -7,25 +7,25 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Multimedia(
     @SerialName("caption")
-    val caption: String?,
+    val caption: String? = null,
     @SerialName("credit")
-    val credit: String?,
+    val credit: String? = null,
     @SerialName("crop_name")
-    val cropName: String,
+    val cropName: String? = null,
     @SerialName("height")
-    val height: Int,
+    val height: Int? = null,
     @SerialName("legacy")
-    val legacy: Legacy,
+    val legacy: Legacy? = null,
     @SerialName("rank")
-    val rank: Int,
+    val rank: Int? = null,
     @SerialName("subType")
-    val subType: String,
+    val subType: String? = null,
     @SerialName("subtype")
-    val subtype: String,
+    val subtype: String? = null,
     @SerialName("type")
-    val type: String,
+    val type: String? = null,
     @SerialName("url")
-    val url: String,
+    val url: String? = null,
     @SerialName("width")
-    val width: Int
+    val width: Int? = null
 )

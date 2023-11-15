@@ -1,4 +1,4 @@
-package org.newskmp.app.data.model
+package org.newskmp.app.data.model.news
 
 
 import kotlinx.serialization.SerialName
