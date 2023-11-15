@@ -33,7 +33,9 @@ import kotlinx.datetime.Instant
 import org.newskmp.app.data.model.Multimedia
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.Result
-import org.newskmp.app.ui.screen.DetailScreen
+import org.newskmp.app.isAndroid
+import org.newskmp.app.ui.screen.detail.DetailScreen
+import org.newskmp.app.ui.screen.detail.DetailScreenLarge
 import kotlin.time.Duration
 
 @Composable
@@ -58,7 +60,11 @@ fun NewsArticleCard(article: Result) {
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-                    navigator!!.push(DetailScreen(article))
+                    if (isAndroid()) {
+                        navigator!!.push(DetailScreen(article))
+                    } else {
+                        navigator!!.push(DetailScreenLarge(article))
+                    }
                 }
                 .padding(16.dp)
         ) {

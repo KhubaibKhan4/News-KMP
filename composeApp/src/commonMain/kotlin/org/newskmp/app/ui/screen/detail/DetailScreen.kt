@@ -1,4 +1,4 @@
-package org.newskmp.app.ui.screen
+package org.newskmp.app.ui.screen.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,8 +29,9 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.filled.LocalOffer
+import androidx.compose.material.icons.filled.SmsFailed
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -53,7 +54,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import org.newskmp.app.data.model.Result
 import org.newskmp.app.ui.components.formatDateTime
 
@@ -68,6 +70,7 @@ class DetailScreen(
     }
 
 }
+
 
 @Composable
 fun DetailItem(
@@ -89,11 +92,18 @@ fun DetailItem(
                 .fillMaxWidth()
                 .height(400.dp)
         ) {
-            Image(
-                painter = rememberImagePainter(result!!.multimedia?.get(0)!!.url),
-                contentDescription = result!!.multimedia!![0].caption,
+            val painterResource = result.multimedia?.get(0)?.let { asyncPainterResource(it.url) }
+            KamelImage(
+                resource = painterResource!!,
+                contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
+                onLoading = {
+                    CircularProgressIndicator(it)
+                },
+                onFailure = {
+                    Image(imageVector = Icons.Default.SmsFailed, contentDescription = null)
+                }
             )
 
             // Back Button

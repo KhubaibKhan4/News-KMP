@@ -50,7 +50,9 @@ import io.kamel.image.asyncPainterResource
 import org.newskmp.app.data.model.Multimedia
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.Result
-import org.newskmp.app.ui.screen.DetailScreen
+import org.newskmp.app.isAndroid
+import org.newskmp.app.ui.screen.detail.DetailScreen
+import org.newskmp.app.ui.screen.detail.DetailScreenLarge
 
 @Composable
 fun TopNews(news: News) {
@@ -77,7 +79,7 @@ fun TopNewsCard(result: Result) {
             .width(345.dp)
             .height(240.dp)
             .clickable {
-                navigator!!.push(DetailScreen(result))
+                    navigator!!.push(DetailScreenLarge(result))
             },
         colors = CardDefaults.cardColors()
     ) {
