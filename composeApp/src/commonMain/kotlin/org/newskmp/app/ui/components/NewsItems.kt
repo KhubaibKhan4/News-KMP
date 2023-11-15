@@ -11,8 +11,11 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.SmsFailed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,7 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.newskmp.app.data.model.Multimedia
@@ -91,18 +95,24 @@ fun NewsArticleCard(article: Result) {
 
 @Composable
 fun NewsImage(multimedia: List<Multimedia>) {
-
-    Image(
-        painter = rememberImagePainter(multimedia[0].url),
-        contentDescription = multimedia[0].caption,
-        contentScale = ContentScale.Crop,
+    val painterRes = asyncPainterResource(multimedia[0].url)
+    KamelImage(
+        resource = painterRes,
+        contentDescription = null,
         modifier = Modifier
             .height(200.dp)
             .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(8.dp))
+            .clip(shape = RoundedCornerShape(8.dp)),
+        contentScale = ContentScale.Crop,
+        onLoading = {
+            CircularProgressIndicator(it)
+        },
+        onFailure = {
+            Image(imageVector = Icons.Default.SmsFailed, contentDescription = null)
+        }
     )
-
 }
+
 fun formatDateTime(dateTimeString: String): String {
     val now = Clock.System.now()
     val instantInThePast: Instant = Instant.parse(dateTimeString)

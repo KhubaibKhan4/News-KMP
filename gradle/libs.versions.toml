@@ -1,5 +1,6 @@
 [versions]
 
+kamelImage = "0.8.3"
 kotlin = "1.9.20"
 agp = "8.1.2"
 compose = "1.5.10"
@@ -26,6 +27,7 @@ multiplatformSettings = "1.1.0"
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 compose-uitooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-uitooling" }
+kamel-image = { module = "media.kamel:kamel-image", version.ref = "kamelImage" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 libres = { module = "io.github.skeptick.libres:libres-compose", version.ref = "libres" }
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }

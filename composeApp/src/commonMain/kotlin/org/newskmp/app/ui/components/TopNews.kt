@@ -1,11 +1,13 @@
 package org.newskmp.app.ui.components
 
 
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,19 +15,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.SmsFailed
 import androidx.compose.material.icons.sharp.KeyboardArrowRight
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.DefaultAlpha
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
@@ -36,7 +45,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import org.newskmp.app.data.model.Multimedia
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.Result
@@ -44,18 +54,16 @@ import org.newskmp.app.ui.screen.DetailScreen
 
 @Composable
 fun TopNews(news: News) {
-    Column {
-        LatestNewsText()
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .padding(start = 8.dp, top = 8.dp)
-        ) {
-            items(news.results) { result ->
-                TopNewsCard(result)
-                Spacer(modifier = Modifier.width(16.dp))
-            }
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(300.dp),
+        state = rememberLazyGridState(),
+        userScrollEnabled = true, contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(news.results) { result ->
+            TopNewsCard(result)
+            Spacer(modifier = Modifier.width(16.dp))
         }
     }
 }
@@ -63,13 +71,13 @@ fun TopNews(news: News) {
 
 @Composable
 fun TopNewsCard(result: Result) {
-val navigator = LocalNavigator.current
+    val navigator = LocalNavigator.current
     Card(
         modifier = Modifier
             .width(345.dp)
             .height(240.dp)
             .clickable {
-                       navigator!!.push(DetailScreen(result))
+                navigator!!.push(DetailScreen(result))
             },
         colors = CardDefaults.cardColors()
     ) {
@@ -99,14 +107,26 @@ val navigator = LocalNavigator.current
 @Composable
 fun NewImage(multimedia: List<Multimedia>) {
 
-    Image(
-        painter = rememberImagePainter(multimedia[0].url),
-        contentDescription = multimedia[0].caption,
+    val painterRes = asyncPainterResource(multimedia[0].url)
+    KamelImage(
+        resource = painterRes,
+        contentDescription = null,
         modifier = Modifier
-            .fillMaxSize(),
-        contentScale = ContentScale.FillBounds,
+            .fillMaxSize()
+            .clip(shape = RoundedCornerShape(8.dp)),
+        contentScale = ContentScale.Crop,
+        onLoading = {
+            CircularProgressIndicator(
+                progress = it,
+                trackColor = if (isSystemInDarkTheme()) Color.Blue else Color.Red
+            )
+        },
+        onFailure = {
+            Image(imageVector = Icons.Default.SmsFailed, contentDescription = null)
+        },
+        animationSpec = tween(),
+        alpha = DefaultAlpha
     )
-
 }
 
 @Composable

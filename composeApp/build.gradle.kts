@@ -43,6 +43,7 @@ kotlin {
             implementation(libs.libres)
             implementation(libs.voyager.navigator)
             implementation(libs.composeImageLoader)
+            implementation(libs.kamel.image)
             implementation(libs.napier)
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.moko.mvvm)

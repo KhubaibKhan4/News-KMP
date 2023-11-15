@@ -58,6 +58,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.launch
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.search.SearchNews
+import org.newskmp.app.isAndroid
 import org.newskmp.app.repository.Repository
 import org.newskmp.app.theme.LocalThemeIsDark
 import org.newskmp.app.ui.components.NewsList
@@ -143,6 +144,7 @@ class HomeScreen() : Screen {
         // Use a state to track the selected category
         var selectedCategory by remember { mutableStateOf(categories.first()) }
 
+
         ModalNavigationDrawer(
             modifier = Modifier.fillMaxHeight(),
             drawerState = drawerState,
@@ -215,33 +217,65 @@ class HomeScreen() : Screen {
                     }
                 }
 
-                TextField(
-                    value = text,
-                    onValueChange = { text = it },
-                    placeholder = {
-                        Text("Search News...")
-                    },
-                    trailingIcon = {
-                        IconButton(onClick = {
-                            isSearch = !isSearch
-                        }) {
-                            Image(
-                                imageVector = Icons.Default.Search,
-                                contentDescription = null
-                            )
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth(0.70f)
-                        .clip(shape = RoundedCornerShape(24.dp))
-                        .align(alignment = Alignment.CenterHorizontally),
-                    maxLines = 1,
-                    colors = TextFieldDefaults.colors(
-                        disabledTextColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
+                if (isAndroid()) {
+                    TextField(
+                        value = text,
+                        onValueChange = { text = it },
+                        placeholder = {
+                            Text("Search News...")
+                        },
+                        trailingIcon = {
+                            IconButton(onClick = {
+                                isSearch = !isSearch
+                            }) {
+                                Image(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = null
+                                )
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(0.70f)
+                            .clip(shape = RoundedCornerShape(24.dp))
+                            .align(alignment = Alignment.CenterHorizontally),
+                        maxLines = 1,
+                        colors = TextFieldDefaults.colors(
+                            disabledTextColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent
+                        )
                     )
-                )
+                } else {
+                    if (isSearch){
+                        TextField(
+                            value = text,
+                            onValueChange = { text = it },
+                            placeholder = {
+                                Text("Search News...")
+                            },
+                            trailingIcon = {
+                                IconButton(onClick = {
+                                    isSearch = !isSearch
+                                }) {
+                                    Image(
+                                        imageVector = Icons.Default.Search,
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(0.70f)
+                                .clip(shape = RoundedCornerShape(24.dp))
+                                .align(alignment = Alignment.CenterHorizontally),
+                            maxLines = 1,
+                            colors = TextFieldDefaults.colors(
+                                disabledTextColor = Color.Transparent,
+                                focusedIndicatorColor = Color.Transparent,
+                                unfocusedIndicatorColor = Color.Transparent,
+                                disabledIndicatorColor = Color.Transparent
+                            )
+                        )
+                    }
+                }
 
                 // LazyRow for category buttons
                 LazyRow {
@@ -469,13 +503,14 @@ class HomeScreen() : Screen {
                             title = "News KMP"
                             val response = (newsState as NewsState.Success).news
                             newsData = response
-
-                            TopNews(newsData!!)
-                            NewsList(newsData!!)
-                            FlowRow {
-                                Text("$newsData")
+                            if (isAndroid()) {
+                                NewsList(newsData!!)
+                                FlowRow {
+                                    Text("$newsData")
+                                }
+                            } else {
+                                TopNews(newsData!!)
                             }
-
                         }
 
                         is NewsState.Error -> {
