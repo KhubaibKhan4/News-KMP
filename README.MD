@@ -29,8 +29,8 @@ This is a Kotlin Multiplatform Project for a news application that supports Andr
 ## Screenshots
 
 ### Screenshot 1
-![Screenshot 1](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png" width="200" height="200"> -->
+<!-- [Screenshot 1](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png) -->
+<img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png" width="200" height="200"> 
 
 ### Screenshot 2
 ![Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png)
