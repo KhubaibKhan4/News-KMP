@@ -1,4 +1,4 @@
-package org.newskmp.app.ui.screen.detail
+package org.newskmp.app.ui.screen.largescreen.search.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,6 +40,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.TextStyle
@@ -52,11 +54,11 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.newskmp.app.data.model.Result
+import org.newskmp.app.data.model.search.Doc
 import org.newskmp.app.ui.components.formatDateTime
 
-class DetailScreenLarge(
-    val result: Result
+class SearchDetailLarge(
+    val doc: Doc
 ) : Screen {
     @Composable
     override fun Content() {
@@ -74,10 +76,11 @@ class DetailScreenLarge(
                 elevation = CardDefaults.cardElevation(8.dp),
                 content = {
                     Box {
-                        val painterResource =
-                            result.multimedia?.get(0)?.let { asyncPainterResource(it.url) }
+                        val imageUrl =if (doc.multimedia.isNullOrEmpty())"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png" else "https://static01.nyt.com/${doc?.multimedia?.get(0)?.url ?: "vi-assets/images/share/1200x675_nameplate.png"}"
+                        println("Image URL: $imageUrl")
+                        val painterResource = asyncPainterResource(data = imageUrl)
                         KamelImage(
-                            resource = painterResource!!,
+                            resource = painterResource,
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
@@ -91,8 +94,9 @@ class DetailScreenLarge(
                                 .padding(8.dp)
                                 .size(40.dp)
                                 .clip(shape = CircleShape)
-                                .background(color = Color.DarkGray).alpha(alpha = 0.5f)
+                                .background(color = Color.DarkGray)
                                 .align(alignment = Alignment.TopStart)
+                                .pointerHoverIcon(icon = PointerIcon.Hand)
 
                         ) {
                             Icon(
@@ -123,7 +127,7 @@ class DetailScreenLarge(
                     .clip(shape = RoundedCornerShape(16.dp)),
                 elevation = CardDefaults.cardElevation(8.dp),
                 content = {
-                    DetailContent(result)
+                    DetailContent(doc)
                 }
             )
         }
@@ -132,7 +136,7 @@ class DetailScreenLarge(
 }
 
 @Composable
-fun DetailContent(result: Result) {
+fun DetailContent(doc: Doc) {
     val navigator = LocalNavigator.current
     val uriHandler = LocalUriHandler.current
 
@@ -175,7 +179,7 @@ fun DetailContent(result: Result) {
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "${formatDateTime(result.publishedDate)}",
+                                text = "${formatDateTime(doc?.pubDate!!)}",
                                 style = TextStyle(
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold,
@@ -185,7 +189,7 @@ fun DetailContent(result: Result) {
 
                         // Title
                         Text(
-                            text = "${result.title}",
+                            text = "${doc.abstract}",
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
@@ -206,7 +210,7 @@ fun DetailContent(result: Result) {
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Published by ${result.byline}",
+                                text = "Published by ${doc.byline}",
                                 style = TextStyle(
                                     fontSize = 10.sp,
                                     fontWeight = FontWeight.Bold,
@@ -229,7 +233,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Section: ${result.section}",
+                    text = "Section: ${doc.sectionName}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -251,7 +255,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Sub-Section: ${result.subsection}",
+                    text = "Sub-Section: ${doc.subsectionName}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -273,7 +277,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Category: ${result.subsection ?: "N/A"}",
+                    text = "Category: ${doc.keywords ?: "N/A"}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -295,7 +299,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Type: ${result.itemType}",
+                    text = "Type: ${doc.typeOfMaterial}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -317,7 +321,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Tags: ${result.desFacet.joinToString()}",
+                    text = "Tags: ${doc.keywords!!.joinToString()}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -339,7 +343,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Tags: ${result.geoFacet.joinToString()}",
+                    text = "Tags: ${doc.newsDesk}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -361,7 +365,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "CopyRight : ${result.multimedia?.get(0)?.copyright}",
+                    text = "CopyRight : ${doc.multimedia?.get(0)?.credit}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -394,7 +398,7 @@ fun DetailContent(result: Result) {
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "Detail: ${result.abstract}",
+                            text = "Detail: ${doc.abstract}",
                             modifier = Modifier.padding(16.dp),
                             style = TextStyle(
                                 fontSize = 14.sp,
@@ -411,7 +415,7 @@ fun DetailContent(result: Result) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth().clickable {
-                    uriHandler.openUri(result.url)
+                    uriHandler.openUri(doc.webUrl!!)
                 }
             ) {
                 Icon(
@@ -421,7 +425,7 @@ fun DetailContent(result: Result) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Official URL : ${result.url}",
+                    text = "Official URL : ${doc.webUrl}",
                     style = TextStyle(
                         fontSize = 14.sp,
                         lineHeight = 21.sp,
@@ -436,9 +440,3 @@ fun DetailContent(result: Result) {
         }
     }
 }
-
-
-
-
-
-

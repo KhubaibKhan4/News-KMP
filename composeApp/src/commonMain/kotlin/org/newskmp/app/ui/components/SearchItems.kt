@@ -1,6 +1,5 @@
 package org.newskmp.app.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +12,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,12 +23,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.navigator.LocalNavigator
-import com.seiko.imageloader.rememberImagePainter
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import org.newskmp.app.data.model.search.Doc
 import org.newskmp.app.data.model.search.SearchNews
-import org.newskmp.app.ui.screen.detail.DetailScreen
+import org.newskmp.app.isAndroid
+import org.newskmp.app.ui.screen.largescreen.search.detail.SearchDetail
+import org.newskmp.app.ui.screen.largescreen.search.detail.SearchDetailLarge
+import org.newskmp.app.util.Constant.NO_PARAGRAPH
+import org.newskmp.app.util.Constant.NO_TITLE
 
 @Composable
 fun SearchList(searchNews: SearchNews) {
@@ -55,15 +58,39 @@ fun SearchArticleCard(doc: Doc) {
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable {
-
+                    if (isAndroid()){
+                    navigator!!.push(SearchDetail(doc))
+                    }else{
+                        navigator!!.push(SearchDetailLarge(doc))
+                    }
                 }
                 .padding(16.dp)
         ) {
-            SearchImage((doc?.multimedia?.get(0)?.url))
+            val imageUrl =if (doc.multimedia.isNullOrEmpty())"https://static01.nyt.com/vi-assets/images/share/1200x675_nameplate.png" else "https://static01.nyt.com/${doc?.multimedia?.get(0)?.url ?: "vi-assets/images/share/1200x675_nameplate.png"}"
+            println("Image URL: $imageUrl")
+
+            val painterResource = asyncPainterResource(data = imageUrl)
+
+            KamelImage(
+                resource = painterResource,
+                contentDescription = "Image Description",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .height(200.dp)
+                    .fillMaxWidth()
+                    .clip(shape = RoundedCornerShape(8.dp)),
+                onLoading = {
+                    CircularProgressIndicator(it)
+                },
+                onFailure = {
+                    Text("No Image Found.")
+                }
+            )
+
             Spacer(modifier = Modifier.height(16.dp))
             doc.abstract?.let {
                 Text(
-                    text = it,
+                    text = it ?: NO_TITLE,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 8.dp),
@@ -73,7 +100,7 @@ fun SearchArticleCard(doc: Doc) {
             }
             doc.leadParagraph?.let {
                 Text(
-                    text = it,
+                    text = it ?: NO_PARAGRAPH,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(bottom = 8.dp),
                     maxLines = 3,
@@ -94,18 +121,4 @@ fun SearchArticleCard(doc: Doc) {
 //            )
         }
     }
-}
-
-@Composable
-fun SearchImage(multimedia: String?) {
-    val painterResource = asyncPainterResource(data = "https://static01.nyt.com/$multimedia")
-    KamelImage(
-        resource = painterResource,
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .height(200.dp)
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(8.dp))
-    )
 }

@@ -34,8 +34,8 @@ import org.newskmp.app.data.model.news.Multimedia
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.Result
 import org.newskmp.app.isAndroid
-import org.newskmp.app.ui.screen.detail.DetailScreen
-import org.newskmp.app.ui.screen.detail.DetailScreenLarge
+import org.newskmp.app.ui.screen.smallscreen.detail.DetailScreen
+import org.newskmp.app.ui.screen.smallscreen.detail.DetailScreenLarge
 import kotlin.time.Duration
 
 @Composable
@@ -120,17 +120,24 @@ fun NewsImage(multimedia: List<Multimedia>) {
 }
 
 fun formatDateTime(dateTimeString: String): String {
-    val now = Clock.System.now()
-    val instantInThePast: Instant = Instant.parse(dateTimeString)
-    val durationSinceThen: Duration = now - instantInThePast
+    try {
+        val now = Clock.System.now()
+        // Remove the extra colon in the offset part
+        val correctedDateTimeString = dateTimeString.replaceFirst(":(\\d{2})$", "$1")
+        val instantInThePast: Instant = Instant.parse(correctedDateTimeString)
+        val durationSinceThen: Duration = now - instantInThePast
 
-    return when {
-        durationSinceThen.inWholeDays > 365 -> "${durationSinceThen.inWholeDays / 365} years ago"
-        durationSinceThen.inWholeDays > 30 -> "${durationSinceThen.inWholeDays / 30} months ago"
-        durationSinceThen.inWholeDays > 0 -> "${durationSinceThen.inWholeDays} days ago"
-        durationSinceThen.inWholeHours > 0 -> "${durationSinceThen.inWholeHours} hours ago"
-        durationSinceThen.inWholeMinutes > 0 -> "${durationSinceThen.inWholeMinutes} minutes ago"
-        else -> "Just now"
+        return when {
+            durationSinceThen.inWholeDays > 365 -> "${durationSinceThen.inWholeDays / 365} years ago"
+            durationSinceThen.inWholeDays > 30 -> "${durationSinceThen.inWholeDays / 30} months ago"
+            durationSinceThen.inWholeDays > 0 -> "${durationSinceThen.inWholeDays} days ago"
+            durationSinceThen.inWholeHours > 0 -> "${durationSinceThen.inWholeHours} hours ago"
+            durationSinceThen.inWholeMinutes > 0 -> "${durationSinceThen.inWholeMinutes} minutes ago"
+            else -> "Just now"
+        }
+    } catch (e: Exception) {
+        // Handle parsing exception
+        return "Invalid date-time format"
     }
 }
 

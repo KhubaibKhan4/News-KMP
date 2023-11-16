@@ -1,4 +1,4 @@
-package org.newskmp.app.ui.screen.detail
+package org.newskmp.app.ui.screen.smallscreen.detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

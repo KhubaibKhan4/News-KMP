@@ -15,6 +15,9 @@ import kotlinx.serialization.json.Json
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.search.SearchNews
 import org.newskmp.app.util.Constant.API
+import org.newskmp.app.util.Constant.BEGIN_DATE
+import org.newskmp.app.util.Constant.END_DATE
+import org.newskmp.app.util.Constant.SORT
 import org.newskmp.app.util.Constant.TIMEOUT
 
 object NewsClientApi {
@@ -170,7 +173,7 @@ object NewsClientApi {
         return client.get(url).body()
     }
     suspend fun getSearch(query: String):SearchNews{
-        val url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${API}"
+        val url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${API}&begin_date=${BEGIN_DATE}&end_date=${END_DATE}&sort=${SORT}&page=1"
         return client.get(url).body()
     }
 
