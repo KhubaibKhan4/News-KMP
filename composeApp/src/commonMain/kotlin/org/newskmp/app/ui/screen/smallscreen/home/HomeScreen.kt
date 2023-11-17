@@ -73,6 +73,7 @@ import org.newskmp.app.ui.components.NewsList
 import org.newskmp.app.ui.components.SearchList
 import org.newskmp.app.ui.components.TopNews
 import org.newskmp.app.ui.screen.largescreen.search.home.SearchListLarge
+import org.newskmp.app.ui.screen.smallscreen.home.headlines.HeadlineList
 import org.newskmp.app.util.NewsState
 import org.newskmp.app.util.SearchState
 import org.newskmp.app.viewmodel.MainViewModel
@@ -831,6 +832,7 @@ class HomeScreen() : Screen {
                             val response = (newsState as NewsState.Success).news
                             newsData = response
                             if (isAndroid()) {
+                                HeadlineList(newsData!!)
                                 NewsList(newsData!!)
                                 FlowRow {
                                     Text("$newsData")
