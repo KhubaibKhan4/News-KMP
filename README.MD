@@ -29,32 +29,32 @@ This is a Kotlin Multiplatform Project for a news application that supports Andr
 ## Screenshots
 
 ### Screenshot 1
-![Screenshot 1](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png" width="200" height="400"> -->
+<!-- [Screenshot 1](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png) -->
+<img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/1.png" width="400" height="800"> 
 
 ### Screenshot 2
-![Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png" width="200" height="400"> -->
+<!-- [Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png) -->
+<img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/2.png" width="400" height="800">
 
 ### Screenshot 3
-![Screenshot 3](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png" width="200" height="400"> -->
+<!-- [Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png) -->
+<img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/3.png" width="400" height="800"> 
 
 ### Screenshot 4
-![Screenshot 4](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png" width="200" height="400"> -->
+<!-- [Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png) -->
+<img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/4.png" width="400" height="800">
 
 ### Screenshot 5
-![Screenshot 5](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png" width="200" height="400"> -->
+<!-- [Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png) -->
+<img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/5.png" width="400" height="800">
 
 ### Screenshot 6
-![Screenshot 6](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png" width="200" height="400"> -->
+<!-- [Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png) -->
+<img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/6.png" width="400" height="800">
 
 ### Screenshot 7
-![Screenshot 7](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/7.png)
-<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/7.png" width="400" height="800"> -->
+<!-- [Screenshot 2](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/7.png) -->
+<img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/7.png" width="400" height="800">
 
 ### Screenshot 8
 ![Screenshot 8](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/8.png)
@@ -68,7 +68,51 @@ This is a Kotlin Multiplatform Project for a news application that supports Andr
 ![Screenshot 10](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/10.png)
 <!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/10.png" width="400" height="800"> -->
 
-<!-- Repeat the above pattern for each screenshot, up to Screenshot 10 -->
+### Screenshot 11
+![Screenshot 11](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/11.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/11.png" width="400" height="800"> -->
+
+### Screenshot 12
+![Screenshot 12](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/12.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/12.png" width="400" height="800"> -->
+
+### Screenshot 13
+![Screenshot 12](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/13.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/13.png" width="400" height="800"> -->
+
+### Screenshot 14
+![Screenshot 14](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/14.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/14.png" width="400" height="800"> -->
+
+### Screenshot 15
+![Screenshot 15](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/15.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/15.png" width="400" height="800"> -->
+
+### Screenshot 16
+![Screenshot 15](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/16.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/16.png" width="400" height="800"> -->
+
+### Screenshot 17
+![Screenshot 17](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/17.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/17.png" width="400" height="800"> -->
+
+### Screenshot 18
+![Screenshot 18](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/18.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/18.png" width="400" height="800"> -->
+
+### Screenshot 19
+![Screenshot 19](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/19.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/19.png" width="400" height="800"> -->
+
+### Screenshot 20
+![Screenshot 20](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/20.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/20.png" width="400" height="800"> -->
+
+### Screenshot 21
+![Screenshot 21](https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/21.png)
+<!-- <img src="https://github.com/KhubaibKhan4/News-KMP/blob/master/screenshots/21.png" width="400" height="800"> -->
+
+<!-- Repeat the above pattern for each screenshot, up to Screenshot 22 -->
 
 
 
