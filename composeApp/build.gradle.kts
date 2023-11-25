@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.libres)
     alias(libs.plugins.kotlinx.serialization)
 }
-
 kotlin {
     androidTarget {
         compilations.all {
@@ -35,9 +34,12 @@ kotlin {
         }
     }
 
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.components.resources)
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
             implementation(libs.libres)
