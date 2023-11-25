@@ -26,6 +26,9 @@ This is a Kotlin Multiplatform Project for a news application that supports Andr
 
 <!-- Add more libraries as needed -->
 
+[![](https://jitpack.io/v/KhubaibKhan4/News-KMP.svg)](https://jitpack.io/#KhubaibKhan4/News-KMP)
+
+
 ## Screenshots
 
 ### Screenshot 1
