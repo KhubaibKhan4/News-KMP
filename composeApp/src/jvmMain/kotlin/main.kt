@@ -1,3 +1,7 @@
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.window.WindowDraggableArea
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AreaChart
 import androidx.compose.material.icons.filled.AutoAwesome
@@ -24,6 +28,8 @@ import androidx.compose.material.icons.filled.TravelExplore
 import androidx.compose.material.icons.filled.Upcoming
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.material.icons.filled.Work
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyShortcut
@@ -33,12 +39,15 @@ import androidx.compose.ui.window.MenuBar
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import androidx.compose.ui.window.singleWindowApplication
 import org.newskmp.app.App
 import java.awt.Dimension
 
 fun main() = application {
+
     Window(
         title = "News KMP App",
+        icon= painterResource("logo.png"),
         state = rememberWindowState(width = 800.dp, height = 600.dp),
         onCloseRequest = ::exitApplication,
     ) {

@@ -6,7 +6,7 @@ import org.jetbrains.skiko.wasm.onWasmReady
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     onWasmReady {
-        CanvasBasedWindow("News KMP App") {
+        CanvasBasedWindow("News KMP App", applyDefaultStyles = true) {
             App()
         }
     }

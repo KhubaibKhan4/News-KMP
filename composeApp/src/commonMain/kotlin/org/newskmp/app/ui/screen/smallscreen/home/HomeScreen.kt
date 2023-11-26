@@ -1,5 +1,6 @@
 package org.newskmp.app.ui.screen.smallscreen.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +19,6 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
@@ -49,7 +49,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,20 +60,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import cafe.adriel.voyager.core.screen.Screen
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
-import moe.tlaster.precompose.flow.collectAsStateWithLifecycle
-import moe.tlaster.precompose.lifecycle.LocalLifecycleOwner
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.newskmp.app.data.model.News
@@ -90,6 +82,7 @@ import org.newskmp.app.ui.screen.smallscreen.home.headlines.HeadlineList
 import org.newskmp.app.util.NewsState
 import org.newskmp.app.util.SearchState
 import org.newskmp.app.viewmodel.MainViewModel
+
 class HomeScreen() : Screen {
     @ExperimentalResourceApi
     @OptIn(ExperimentalLayoutApi::class)
@@ -252,16 +245,18 @@ class HomeScreen() : Screen {
 
                         }
                     }
-                    if (isAndroid()){
-                        Image(
-                            painterResource(if (isDark) "logo.png" else "logo_night.png"),
-                            contentDescription = null,
-                            modifier = Modifier.weight(0.80f)
-                                .width(50.dp)
-                                .height(30.dp)
-                                .align(alignment = Alignment.CenterVertically),
-                        )
-                    }else {
+                    if (isAndroid()) {
+                        AnimatedVisibility(isDark) {
+                            Image(
+                                painterResource(if (isDark) "logo.png" else "logo_night.png"),
+                                contentDescription = null,
+                                modifier = Modifier.weight(0.80f)
+                                    .width(50.dp)
+                                    .height(30.dp)
+                                    .align(alignment = Alignment.CenterVertically),
+                            )
+                        }
+                    } else {
                         Image(
                             painterResource(if (isDark) "logo.png" else "logo_night.png"),
                             contentDescription = null,
