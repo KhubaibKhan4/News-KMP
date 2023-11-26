@@ -39,3 +39,6 @@ internal actual fun openUrl(url: String?) {
 actual fun isAndroid(): Boolean{
     return true
 }
+actual fun isJs(): Boolean{
+    return false
+}

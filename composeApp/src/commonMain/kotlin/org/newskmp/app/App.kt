@@ -13,3 +13,4 @@ internal fun App() = AppTheme {
 
 internal expect fun openUrl(url: String?)
 expect fun isAndroid(): Boolean
+expect fun isJs(): Boolean

@@ -72,6 +72,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.newskmp.app.data.model.News
 import org.newskmp.app.data.model.search.SearchNews
 import org.newskmp.app.isAndroid
+import org.newskmp.app.isJs
 import org.newskmp.app.repository.Repository
 import org.newskmp.app.theme.LocalThemeIsDark
 import org.newskmp.app.ui.components.NewsList
@@ -201,7 +202,6 @@ class HomeScreen() : Screen {
             Column(
                 modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)
             ) {
-
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
@@ -273,7 +273,7 @@ class HomeScreen() : Screen {
 //                            .padding(16.dp)
 //                    )
 
-                    if (!isAndroid()) {
+                    if (!isAndroid() && !isJs()) {
                         Box(
                             modifier = Modifier.wrapContentWidth()
                                 .clickable {
@@ -605,6 +605,7 @@ class HomeScreen() : Screen {
                     }
                 }
 
+
                 // LazyRow for category buttons
                 if (isAndroid()) {
                     LazyRow {
@@ -888,5 +889,4 @@ class HomeScreen() : Screen {
             }
         }
     }
-
 }

@@ -10,3 +10,6 @@ internal actual fun openUrl(url: String?) {
 actual fun isAndroid(): Boolean{
     return false
 }
+actual fun isJs():Boolean{
+    return false
+}
