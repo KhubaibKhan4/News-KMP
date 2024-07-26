@@ -5,7 +5,7 @@ This is a Kotlin Multiplatform Project for a news application that supports Andr
 ## Technologies Used
 
 - **Kotlin Multiplatform:** The project is built using Kotlin Multiplatform, allowing code sharing across different platforms.
-
+ 
 - **Android:** The Android app is built using Kotlin and leverages the Android SDK.
 
 - **iOS:** The iOS app is built using Kotlin Multiplatform, enabling code reuse with the iOS platform.
